@@ -15,9 +15,17 @@ func Setup(env *enviroment.Enviroment, db *database.Database, gin *gin.Engine) {
 	todoRepository := services.NewTodoService(*db)
 	todoUsecases := usecases.NewTodoUsecases(todoRepository)
 
+	userRepository := services.NewUserService(*db)
+	userUsecases := usecases.NewUserUsecases(userRepository)
+
 	todoController := &controllers.TodoController{
 		Usecases: todoUsecases,
 	}
 
+	userController := &controllers.UserController{
+		Usecases: userUsecases,
+	}
+
 	NewTodoRoute(*todoController, publicRouter)
+	NewUserRoute(*userController, publicRouter)
 }
