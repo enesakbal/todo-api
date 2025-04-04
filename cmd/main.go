@@ -1,10 +1,12 @@
 package main
 
 import (
+	middlewares "github.com/enesakbal/todo-api/api/middlewares"
 	"github.com/enesakbal/todo-api/api/routes"
 	"github.com/enesakbal/todo-api/bootstrap/application"
 	"github.com/enesakbal/todo-api/bootstrap/database"
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
@@ -17,7 +19,9 @@ func main() {
 
 	gin := gin.Default()
 
+	gin.Use(middlewares.JsonLoggerMiddleware())
+
 	routes.Setup(env, db, gin)
 
-	gin.Run(env.ServerAddress)
+	gin.Run()
 }
