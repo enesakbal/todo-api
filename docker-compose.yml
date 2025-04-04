@@ -1,0 +1,25 @@
+services:
+  mysql:
+    image: mysql
+    container_name: todo-mysql-container
+    restart: always
+    env_file:
+      - .env.development
+    volumes:
+      - ./mysql/init_tables.sql:/docker-entrypoint-initdb.d/init_tables.sql
+    ports:
+      - "3306:3306"
+    command:
+      ["mysqld", "--init-file=/docker-entrypoint-initdb.d/init_tables.sql"]
+
+  # todo-app:
+  #   container_name: todo-app-container
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:8080"
+  #   restart: always
+
+volumes:
+  mysql_data:
