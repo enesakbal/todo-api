@@ -18,7 +18,7 @@ func NewDatabase(env *enviroment.Enviroment) *Database {
 	DBName := env.DBName
 	DBHost := env.DBHost
 
-	connectionSource := fmt.Sprintf("%v:%v@tcp(%v)/%v", DBUser, DBPass, DBHost, DBName)
+	connectionSource := fmt.Sprintf("%v:%v@tcp(%v)/%v?parseTime=true", DBUser, DBPass, DBHost, DBName)
 
 	db, err := sql.Open("mysql", connectionSource)
 
