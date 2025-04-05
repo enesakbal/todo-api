@@ -7,5 +7,7 @@ import (
 
 func NewTodoRoute(controllers controllers.TodoController, group *gin.RouterGroup) {
 
-	group.POST("/todo", controllers.CreateTodo)
+	group.POST("/todo/:user_id", controllers.CreateTodo)
+	group.GET("/todo", controllers.GetTodosByUserID)
+
 }

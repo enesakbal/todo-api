@@ -19,6 +19,11 @@ func NewTodoUsecases(repository repositories.TodoRepository) TodoUsecases {
 	return usecase
 }
 
-func (usecase *TodoUsecases) CreateTodo(c context.Context, todo types.Todo) error {
-	return usecase.repository.CreateTodo(c, todo)
+func (usecase *TodoUsecases) CreateTodo(c context.Context, todo types.Todo, userID int) (types.Todo, error) {
+	return usecase.repository.CreateTodo(c, todo, userID)
+}
+
+func (usecase *TodoUsecases) GetTodosByUserID(c context.Context, userID int) ([]types.Todo, error) {
+	return usecase.repository.GetTodosByUserID(c, userID)
+
 }

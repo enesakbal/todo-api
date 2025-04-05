@@ -7,5 +7,6 @@ import (
 )
 
 type TodoRepository interface {
-	CreateTodo(c context.Context, todo types.Todo) error
+	CreateTodo(c context.Context, todo types.Todo, userID int) (types.Todo, error)
+	GetTodosByUserID(c context.Context, userID int) ([]types.Todo, error)
 }
