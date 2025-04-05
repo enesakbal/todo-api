@@ -9,4 +9,5 @@ import (
 type UserRepository interface {
 	CreateUser(ctx context.Context, user types.User) error
 	GetAllUsers(ctx context.Context) ([]types.User, error)
+	GetUserByID(ctx context.Context, id int) (types.User, error)
 }

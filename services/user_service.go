@@ -60,7 +60,7 @@ func (t *userService) GetAllUsers(c context.Context) ([]types.User, error) {
 	for rows.Next() {
 		var user types.User
 
-		err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+		err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt, &user.UpdatedAt)
 
 		if err != nil {
 			log.Error().Msg("Error scanning user: " + err.Error())
@@ -71,4 +71,33 @@ func (t *userService) GetAllUsers(c context.Context) ([]types.User, error) {
 	}
 
 	return users, nil
+}
+
+func (t *userService) GetUserByID(c context.Context, id int) (types.User, error) {
+	query := `
+		SELECT * FROM users WHERE user_id = ?
+	`
+	log.Info().Msg("Hello from Zerolog global logger")
+
+	rows, err := t.DBConnection.Query(query, id)
+
+	if err != nil {
+		log.Error().Msg("Error creating user: " + err.Error())
+		return types.User{}, err
+	}
+
+	defer rows.Close()
+
+	var user types.User
+
+	for rows.Next() {
+		err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt, &user.UpdatedAt)
+
+		if err != nil {
+			log.Error().Msg("Error scanning user: " + err.Error())
+			return types.User{}, err
+		}
+	}
+
+	return user, nil
 }

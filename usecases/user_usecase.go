@@ -26,3 +26,7 @@ func (usecase *UserUsecases) CreateUser(c context.Context, user types.User) erro
 func (usecase *UserUsecases) GetAllUsers(c context.Context) ([]types.User, error) {
 	return usecase.repository.GetAllUsers(c)
 }
+
+func (usecase *UserUsecases) GetUserByID(c context.Context, id int) (types.User, error) {
+	return usecase.repository.GetUserByID(c, id)
+}

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/enesakbal/todo-api/types"
 	"github.com/enesakbal/todo-api/usecases"
@@ -39,5 +40,21 @@ func (uc *UserController) GetAllUsers(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, users)
+}
 
+func (uc *UserController) GetUserByID(c *gin.Context) {
+	userID, err := strconv.Atoi(c.Param("user_id"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "Invalid user ID")
+		return
+	}
+
+	user, err := uc.Usecases.GetUserByID(c, userID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "Internal Server Error - "+err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
 }
